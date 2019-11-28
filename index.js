@@ -4,7 +4,7 @@ const express = require('express');
 const animal = require('./model/animal');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 const app = express();
 
