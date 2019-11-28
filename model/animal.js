@@ -1,16 +1,41 @@
 'use strict';
 
-const connection = require('db.js');
+const connection = require('./db');
 
-module.exports = async () => {
+exports.getAll = async () => {
     try {
-        const [results,fields] = await connection.query(
-            'SELECT * FROM animal');
-        console.log(results); // containst rows r
-        console.log(fields); // containst extra m
+        const [results, fields] = await connection.query('SELECT * FROM animal');
+        console.log(results); // results contains rows r
+        console.log(fields); // fields contains extra m
         return results;
-    }catch (e) {
-        console.error(e);
-        return 'db error';
+    } catch (e) {
+        console.log(e);
+        throw 'db error :(';
     }
+};
+
+exports.search = async (name) => {
+    try {
+        const [results] = await connection.query(
+            'SELECT * FROM animal WHERE name LIKE ?',
+            [name]);
+        return results;
+    } catch(e) {
+        console.log(e);
+        throw `db error`;
+    }
+};
+
+exports.insert = async (name) => {
+    try {
+        const [result] = await connection.query(
+            'INSERT INTO animal  (name) VALUES (?)',
+            [name]
+        );
+        return result;
+    } catch (e) {
+        console.log(e);
+        throw('db error');
+    }
+
 };
